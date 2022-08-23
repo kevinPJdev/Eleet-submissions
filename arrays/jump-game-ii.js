@@ -24,31 +24,17 @@ Explanation: The minimum number of jumps to reach the last index is 2. Jump 1 st
  * @return {number}
  */
  var jump = function(nums) {
-  let n = nums.length
-  if(n <= 1){
-          return 0
+  var l, r = 0;
+  var res = 0;
+  
+  while(r < nums.length - 1) {
+      var farthest = 0;
+      for(var i= l; i< r+1; i++) {
+          farthest = max(farthest, i+nums[i])
       }
-      
-      if(nums[0] == 0){
-          return -1
-      }
-      
-      let jumps = 1
-      let steps = nums[0]
-      let maxReach = nums[0]
-      let i = 1
-      for(let i = 1; i < n; i++){
-          if(i == n-1) return jumps
-          
-          maxReach = Math.max(maxReach, nums[i] + i)
-          steps--;
-          if(steps == 0){
-              jumps++
-              if(i >= maxReach){
-                  return -1
-              }
-              steps = maxReach - i
-          }
-      }
-      return -1;
+      l = r+1;
+      r= farthest;
+      res += 1
+  }
+  return res
 };
